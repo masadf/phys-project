@@ -15,3 +15,50 @@
     border-radius: 50%;
   }
 }
+
+.modal-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  z-index: 4;
+
+  .modal {
+    z-index: 5;
+    width: 50vw;
+    padding: 2rem 3rem;
+    background-color: #fff;
+    border-radius: 1rem;
+
+    h1 {
+      text-align: center;
+      padding-bottom: 1rem;
+    }
+
+    .charge-params {
+      display: grid;
+      gap: 0.8rem;
+
+      .charge-param-block {
+        display: grid;
+        grid-template-rows: auto auto;
+        gap: 0.5rem;
+
+        .param-name {
+          font-weight: 700;
+          font-size: 1.1rem;
+        }
+      }
+    }
+  }
+}
+
+.draggable-wrapper {
+  cursor: pointer;
+  position: relative;
+}

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
 * {
   box-sizing: border-box;
   font-family: "Montserrat", serif;
@@ -12,16 +13,54 @@ html {
 
 .wrapper {
   padding: 1.2rem 3rem;
+  display: grid;
+  height: 100vh;
+  grid-template-rows: auto 1fr;
+  gap: 2rem;
+
+  .add-charge {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    cursor: pointer;
+    z-index: 3;
+
+    a {
+      outline: none;
+      text-decoration: none;
+      padding: 1rem 2rem;
+      border: 0.2rem solid #0429ff;
+      color: #0429ff;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+  }
+
+  .charge-window {
+    border: .2rem solid black;
+    position: relative;
+    overflow: hidden;
+  }
+}
+
+#cnvs {
+  top: 0;
+  left: 0;
+  position: absolute;
+  z-index: 1;
 }
 
 .react-draggable {
+  z-index: 2;
   width: min-content;
 }
 
 .charge-values {
+  position: relative;
   display: grid;
   text-align: center;
   gap: 2rem;
+  z-index: 2;
 
   .charge-params {
     display: grid;
