@@ -8,7 +8,7 @@ export function vectorGrid(chargeWindowId, points) {
     let width = chargeWindow.getBoundingClientRect().width;
     for (let i = 0; i < height / res; i++) {
         for (let j = 0; j < width / res; j++) {
-            let Ex = 0
+            let Ex = 0;
             let Ey = 0;
             points.forEach((point) => {
                 let [dEx, dEy] = calculatePointTension(point, j, i);
@@ -33,6 +33,18 @@ export function vectorGrid(chargeWindowId, points) {
         }
     }
     return [grid_X, grid_Y];
+}
+
+export function calculateTensionInPoint(points, x, y) {
+    let Ex = 0;
+    let Ey = 0;
+    points.forEach((point) => {
+        let [dEx, dEy] = calculatePointTension(point, x / res, y / res);
+        Ex += dEx;
+        Ey += dEy;
+    })
+
+    return 9 * Math.sqrt(Ex * Ex + Ey * Ey);
 }
 
 function calculatePointTension(point, gridWidthIndex, gridHeightIndex) {

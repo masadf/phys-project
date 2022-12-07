@@ -15,8 +15,8 @@ html {
   padding: 1.2rem 3rem;
   display: grid;
   height: 100vh;
-  grid-template-rows: auto 1fr;
-  gap: 2rem;
+  grid-template-rows: auto auto 1fr;
+  gap: 1rem;
 
   .add-charge {
     position: absolute;
@@ -36,11 +36,31 @@ html {
     }
   }
 
+  .charge-options {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: space-between;
+  }
+
   .charge-window {
     border: .2rem solid black;
     position: relative;
     overflow: hidden;
+
+    .last-clicked-dot {
+      background-color: black;
+      width: 1rem;
+      height: 1rem;
+      position: absolute;
+      transform: translate(-0.5rem, -0.5rem);
+      z-index: 10;
+      border-radius: 50%;
+    }
   }
+}
+
+.popover {
+  padding: 0.8rem;
 }
 
 #cnvs {

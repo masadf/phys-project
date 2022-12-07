@@ -3,7 +3,7 @@ import Draggable from "react-draggable";
 import {Button, Slider, TextField} from "@mui/material";
 import {useState} from "react";
 
-export const Charge = ({setCoordinates, deleteMe, setCharge, point}) => {
+export const Charge = ({index, setCoordinates, deleteMe, setCharge, point, tensionMode, isNeedToUpdate}) => {
     const onDrag = (e) => {
         let chargeWindow = document.getElementById("chargeWindow");
         setCoordinates(e.target.getBoundingClientRect().x - chargeWindow.getBoundingClientRect().x, e.target.getBoundingClientRect().y - chargeWindow.getBoundingClientRect().y);
@@ -12,7 +12,8 @@ export const Charge = ({setCoordinates, deleteMe, setCharge, point}) => {
     const [modal, setModal] = useState(false);
 
     return (
-        <div className="draggable-wrapper" onDoubleClick={() => !modal && setModal(true)}>
+        <div className="draggable-wrapper" style={tensionMode ? {pointerEvents: "none"} : {pointerEvents: "all"}}
+             onDoubleClick={() => !modal && setModal(true)}>
             <Draggable tyle={{
                 top: point.y,
                 left: point.x
@@ -31,8 +32,10 @@ export const Charge = ({setCoordinates, deleteMe, setCharge, point}) => {
                         <div className="charge-param-block">
                             <span className="param-name">Заряд(нКл)</span>
                             <Slider
+                                key={index}
                                 onChange={e => {
-                                    setCharge(e.target.value)
+                                    if (isNeedToUpdate) return;
+                                    setCharge(e.target.value);
                                 }}
                                 defaultValue={point.charge}
                                 step={100}
