@@ -46,8 +46,8 @@ const App = () => {
                 ctx.moveTo(x, y)
                 ctx.lineWidth = 2.5
                 if (equipotentialSurfaces) {
-                    ctx.lineTo(x + gridY[yf][xf], y + gridX[yf][xf]);
-                    ctx.lineTo(x - gridY[yf][xf], y - gridX[yf][xf]);
+                    ctx.lineTo(x + gridY[yf][xf], y - gridX[yf][xf]);
+                    ctx.lineTo(x - gridY[yf][xf], y + gridX[yf][xf]);
                 } else {
                     ctx.lineTo(x + gridX[yf][xf], y + gridY[yf][xf]);
                     ctx.lineTo(x - gridX[yf][xf], y - gridY[yf][xf]);
