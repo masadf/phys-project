@@ -35,6 +35,10 @@
     background-color: #fff;
     border-radius: 1rem;
 
+    @media (max-width: 980px) {
+      width: 90vw;
+    }
+
     h1 {
       text-align: center;
       padding-bottom: 1rem;

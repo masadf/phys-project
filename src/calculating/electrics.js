@@ -1,4 +1,4 @@
-export const res = 20;
+export const res = 15;
 
 export function vectorGrid(chargeWindowId, points) {
     let grid_X = [];
@@ -18,8 +18,8 @@ export function vectorGrid(chargeWindowId, points) {
 
             let EE = Math.sqrt(Ex * Ex + Ey * Ey);
 
-            let deltax = 15 * Ex / EE;
-            let deltay = 15 * Ey / EE;
+            let deltax = 10 * Ex / EE;
+            let deltay = 10 * Ey / EE;
 
             if (grid_X[i] === undefined) {
                 grid_X[i] = [];

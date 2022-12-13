@@ -3,7 +3,16 @@ import Draggable from "react-draggable";
 import {Button, Slider, TextField} from "@mui/material";
 import {useState} from "react";
 
-export const Charge = ({index, setCoordinates, deleteMe, setCharge, point, tensionMode, isNeedToUpdate}) => {
+export const Charge = ({
+                           index,
+                           setCoordinates,
+                           deleteMe,
+                           setCharge,
+                           point,
+                           tensionMode,
+                           isNeedToUpdate,
+                           changeMode
+                       }) => {
     const onDrag = (e) => {
         let chargeWindow = document.getElementById("chargeWindow");
         setCoordinates(e.target.getBoundingClientRect().x - chargeWindow.getBoundingClientRect().x, e.target.getBoundingClientRect().y - chargeWindow.getBoundingClientRect().y);
@@ -13,11 +22,11 @@ export const Charge = ({index, setCoordinates, deleteMe, setCharge, point, tensi
 
     return (
         <div className="draggable-wrapper" style={tensionMode ? {pointerEvents: "none"} : {pointerEvents: "all"}}
-             onDoubleClick={() => !modal && setModal(true)}>
+             onClick={() => changeMode && !modal && setModal(true)}>
             <Draggable tyle={{
                 top: point.y,
                 left: point.x
-            }} onStop={(e) => onDrag(e)}
+            }} disabled={changeMode} onStop={(e) => onDrag(e)}
                        defaultPosition={{x: point.x, y: point.y}}>
                 <div className={"charge-wrapper"}>
                     <div className="charge"

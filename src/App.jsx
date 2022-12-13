@@ -8,6 +8,8 @@ const App = () => {
     const [isNeedToUpdate, setNeedToUpdate] = useState(false);
     const [isNeedToUpdatePoints, setNeedToUpdatePoints] = useState(false);
     const [tensionMode, setTensionMode] = useState(false);
+    const [equipotentialSurfaces, setEquipotentialSurfaces] = useState(false);
+    const [changeMode, setChangeMode] = useState(false);
     const [anchor, setAnchor] = useState({
         view: null,
         x: null,
@@ -33,17 +35,26 @@ const App = () => {
         canvas.height = height;
 
         ctx.clearRect(0, 0, width, height)
-        for (let i = 0; i < 4000; i++) {
-            ctx.beginPath();
-            let x = Math.random() * width;
-            let xf = Math.floor(x / (res));
-            let y = Math.random() * height;
-            let yf = Math.floor(y / (res));
+        for (let i = 0; i < height / res; i++) {
+            for (let j = 0; j < width / res; j++) {
+                ctx.beginPath();
+                let x = j * res;
+                let xf = Math.floor(x / (res));
+                let y = i * res;
+                let yf = Math.floor(y / (res));
 
-            ctx.moveTo(x, y)
-            ctx.lineTo(x + gridX[yf][xf], y + gridY[yf][xf]);
-            ctx.closePath()
-            ctx.stroke()
+                ctx.moveTo(x, y)
+                ctx.lineWidth = 2.5
+                if (equipotentialSurfaces) {
+                    ctx.lineTo(x + gridY[yf][xf], y + gridX[yf][xf]);
+                    ctx.lineTo(x - gridY[yf][xf], y - gridX[yf][xf]);
+                } else {
+                    ctx.lineTo(x + gridX[yf][xf], y + gridY[yf][xf]);
+                    ctx.lineTo(x - gridX[yf][xf], y - gridY[yf][xf]);
+                }
+                ctx.closePath()
+                ctx.stroke()
+            }
         }
     }
 
@@ -51,7 +62,7 @@ const App = () => {
         drawLines(points);
         setNeedToUpdate(false);
         setNeedToUpdatePoints(false);
-    }, [isNeedToUpdate, points])
+    }, [isNeedToUpdate, points, equipotentialSurfaces])
 
     return (
         <div className="wrapper">
@@ -59,9 +70,16 @@ const App = () => {
                 <h1>Параметры взаимодействия</h1>
             </div>
             <div className="charge-options">
-                <FormControlLabel label={"Режим подсчёта напряжённости"}
+                <FormControlLabel label={"Режим анализа"}
                                   control={<Switch checked={tensionMode}
                                                    onChange={() => setTensionMode(!tensionMode)}/>}/>
+                <FormControlLabel
+                    label={"Режим эквипотенциальной поверхности"}
+                    control={<Switch checked={equipotentialSurfaces}
+                                     onChange={() => setEquipotentialSurfaces(!equipotentialSurfaces)}/>}/>
+                <FormControlLabel label={"Режим Изменения"}
+                                  control={<Switch checked={changeMode}
+                                                   onChange={() => setChangeMode(!changeMode)}/>}/>
                 <Button variant="contained" onClick={() => {
                     if (tensionMode || isNeedToUpdate) return;
                     points.push({x: 50, y: 50, charge: 100});
@@ -74,7 +92,7 @@ const App = () => {
                 <Popover anchorEl={anchor?.view} open={Boolean(anchor?.view)}
                          onClose={() => setAnchor(null)}>
                     <div className="popover">
-                        Напряженность: {calculateTensionInPoint(points, anchor?.x, anchor?.y)} Н/Кл
+                        Напряженность: {Math.round(calculateTensionInPoint(points, anchor?.x, anchor?.y) * 10000) / 10000.0} Н/Кл
                     </div>
                 </Popover>
                 <canvas id="cnvs"></canvas>
@@ -85,6 +103,7 @@ const App = () => {
                     return <Charge key={index}
                                    index={index}
                                    isNeedToUpdate={isNeedToUpdate}
+                                   changeMode={changeMode}
                                    tensionMode={tensionMode}
                                    setCharge={(charge) => {
                                        if (isNeedToUpdate) return;
