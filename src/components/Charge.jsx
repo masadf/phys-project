@@ -55,11 +55,11 @@ export const Charge = ({
                         </div>
                         <div className="charge-param-block">
                             <span className="param-name">X(метры)</span>
-                            <TextField aria-readonly="true" value={point.x} variant="outlined"/>
+                            <TextField aria-readonly="true" value={Math.round(point.x * 100) / 100} variant="outlined"/>
                         </div>
                         <div className="charge-param-block">
                             <span className="param-name">Y(метры)</span>
-                            <TextField aria-readonly="true" value={point.y} variant="outlined"/>
+                            <TextField aria-readonly="true" value={Math.round(point.y * 100) / 100} variant="outlined"/>
                         </div>
                         <div className="charge-param-block">
                             <Button onClick={deleteMe} color="error" variant="contained">Удалить</Button>
